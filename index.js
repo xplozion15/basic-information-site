@@ -5,7 +5,6 @@ import fs from "node:fs";
 const hostname = "localhost";
 const port = 8080;
 
-
 app.get("/", (req, res) => {
   fs.readFile("index.html", "utf8", (err, data) => {
     if (err) {
@@ -36,17 +35,9 @@ app.get("/contact-me", (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {
-  fs.readFile("404.html", "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    res.end(data);
-  });
+app.use((req, res) => {
+  res.status(404).sendFile("/home/xplozion/basic-information-site/404.html");
 });
-
-
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
